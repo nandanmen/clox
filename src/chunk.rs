@@ -1,11 +1,12 @@
 use crate::value::*;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum OpCode {
   LoadConstant,
   Return,
 }
 
+#[derive(Clone, Copy)]
 pub enum Instruction {
   OpCode(OpCode),
   Argument(usize),

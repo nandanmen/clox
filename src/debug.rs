@@ -19,7 +19,7 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: usize) -> usize {
     print!("{} ", chunk.lines[offset]);
   }
 
-  let instruction = &chunk.code[offset];
+  let instruction = chunk.code[offset];
   match instruction {
     Instruction::OpCode(code) => match code {
       OpCode::Return => simple_instruction("OpReturn", offset),
@@ -33,14 +33,14 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: usize) -> usize {
 }
 
 fn constant_instruction(name: &str, chunk: &Chunk, offset: usize) -> usize {
-  let next_bytecode = &chunk.code[offset + 1];
+  let next_bytecode = chunk.code[offset + 1];
 
   match next_bytecode {
     Instruction::OpCode(code) => panic!("Unexpected OpCode {:?}", code),
     Instruction::Argument(const_address) => {
       print!("{} {} ", name, const_address);
 
-      let value = chunk.constants.values[*const_address];
+      let value = chunk.constants.values[const_address];
       print_value(value);
 
       println!("");
